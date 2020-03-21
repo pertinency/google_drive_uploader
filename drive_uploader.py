@@ -1,5 +1,6 @@
 import os
 import subprocess
+import requests
 
 
 def prepare(file_delete=False):
@@ -13,10 +14,16 @@ def prepare(file_delete=False):
     # 실행에 필요한 파일들은 리스트에서 제외.
     if 'bat.bat' in file_list:
         file_list.remove('bat.bat')
-    if 'sample.wmv' in file_list:
-        file_list.remove('sample.wmv')
     if 'drive_uploader.py' in file_list:
         file_list.remove('drive_uploader.py')
+    if 'sample.wmv' in file_list:
+        file_list.remove('sample.wmv')
+    else:
+        # sample.wmv 파일이 없을 경우엔 깃허브에서 받아올 수 있도록 하였음.
+        url = 'https://raw.githubusercontent.com/pertinency/google_drive_uploader/master/sample.wmv'
+        res = requests.get(url=url, allow_redirects=True)
+        with open('sample.wmv', 'wb') as f:
+            f.write(res.content)
 
     # bat 파일 작성
     with open("bat.bat", 'w') as bat_file:
@@ -35,6 +42,8 @@ def prepare(file_delete=False):
     # 준비파일 삭제
     # if os.path.isfile('bat.bat'):
     #     os.remove('bat.bat')
+    if os.path.isfile('sample.wmv'):
+        os.remove('sample.wmv')
 
 
 if __name__ == "__main__":
