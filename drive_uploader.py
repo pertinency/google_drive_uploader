@@ -9,23 +9,25 @@ def prepare(file_delete=False):
 
     # 파일 리스트를 가져온다.
     file_list = os.listdir()
-    print("리스트는 : \n{}".format(file_list))
 
     # 실행에 필요한 파일들은 리스트에서 제외.
-    if 'bat.bat' in file_list:
-        file_list.remove('bat.bat')
-    if 'drive_uploader.py' in file_list:
-        file_list.remove('drive_uploader.py')
     if 'sample.wmv' in file_list:
         file_list.remove('sample.wmv')
-    if '새 폴더' in file_list:
-        file_list.remove('새 폴더')
     else:
         # sample.wmv 파일이 없을 경우엔 깃허브에서 받아올 수 있도록 하였음.
+        print('sample 파일 받아오는 중')
         url = 'https://raw.githubusercontent.com/pertinency/google_drive_uploader/master/sample.wmv'
         res = requests.get(url=url, allow_redirects=True)
         with open('sample.wmv', 'wb') as f:
             f.write(res.content)
+    if '새 폴더' in file_list:
+        file_list.remove('새 폴더')
+    if 'bat.bat' in file_list:
+        file_list.remove('bat.bat')
+    if 'drive_uploader.py' in file_list:
+        file_list.remove('drive_uploader.py')
+
+    print("리스트는 : \n{}".format(file_list))
 
     # bat 파일 작성
     with open("bat.bat", 'w') as bat_file:
