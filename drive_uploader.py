@@ -18,6 +18,8 @@ def prepare(file_delete=False):
         file_list.remove('drive_uploader.py')
     if 'sample.wmv' in file_list:
         file_list.remove('sample.wmv')
+    if '새 폴더' in file_list:
+        file_list.remove('새 폴더')
     else:
         # sample.wmv 파일이 없을 경우엔 깃허브에서 받아올 수 있도록 하였음.
         url = 'https://raw.githubusercontent.com/pertinency/google_drive_uploader/master/sample.wmv'
@@ -37,11 +39,11 @@ def prepare(file_delete=False):
                 bat_file.write(del_string)
 
     # bat 파일 실행
-    # subprocess.call('bat.bat')
+    subprocess.call('bat.bat')
 
     # 준비파일 삭제
-    # if os.path.isfile('bat.bat'):
-    #     os.remove('bat.bat')
+    if os.path.isfile('bat.bat'):
+        os.remove('bat.bat')
     if os.path.isfile('sample.wmv'):
         os.remove('sample.wmv')
 
